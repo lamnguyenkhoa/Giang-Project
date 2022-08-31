@@ -1,8 +1,60 @@
 {
-  "name": "John Doe",
+  "name": "Harper Russo",
+  "currentTitle": "Lead recruiter",
   "birthday": "12/06/1996",
-  "description": "Amet adipisicing elit ex do qui id nostrud dolore proident eiusmod eiusmod incididunt enim.",
-  "email": "john.doe@gmail.com",
+  "biography": "I am a HR Manager specialist who has 5 years' experience in recruiting new employees according to specifications, retaining current employees and developing recruitment strategies, implementing systems for managing staff benefits.",
+  "email": "hello@reallygreatsite.com",
+  "website": "www.reallygreatsite.com",
+  "socialMedia": "@reallygreatsite",
   "mobilePhone": "0451123456",
-  "address" : "123 Patrice St, Melbourne, VIC 3000"
+  "address": "123 Anywhere St., Any City, State, Country 12345",
+  "skills": [
+    "Headhunting experience",
+    "Familiar with HR analytics tools",
+    "High Interviewing skills",
+    "Strong networking and communication skills",
+    "Managing offboarding employees",
+    "Proactive, initiative, creative and engaged"
+  ],
+  "awards": [
+    "Best Outstanding Employee of The Year (2021)",
+    "Best Outstanding Employee of The Year (2020)"
+  ],
+  "experiences": [
+    {
+      "company": "Ginyard International Co.",
+      "period": "2020-2021",
+      "position": "HR Assistant/ Recruiter",
+      "description": [
+        "Develop and update job descriptions and job specifications",
+        "Post Ads on different hiring websites, Facebook, Instagram another hiring platform",
+        "Review Candidates"
+      ]
+    },
+    {
+      "company": "Larana Inc.",
+      "period": "2021-NOW",
+      "position": "HR Assistant/ Recruiter",
+      "description": [
+        "Performing Full Life Cycle Recruitment",
+        "Cooperate with freelance recruiters and agencies",
+        "Ensuring a steady flow of candidates for open positions"
+      ]
+    }
+  ],
+  "educations": [
+    {
+      "degree": "Bachelor in Business Administration",
+      "university": "Borcelle University",
+      "period": "2015-2019",
+      "gpa": "3.85/4"
+    },
+    {
+      "degree": "MASTER IN HUMAN RESOURCE MANAGEMENT business",
+      "university": "Business Academy",
+      "period": "2019-2021",
+      "gpa": ""
+    }
+  ],
+  "projects": []
 }
