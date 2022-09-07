@@ -11,3 +11,4 @@ dependencies:
       - reportlab
       - fpdf
       - markdown
+      - dominate
