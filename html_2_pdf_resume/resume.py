@@ -9,7 +9,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-
 import markdown
 
 preamble = """\
@@ -92,9 +91,7 @@ def title(md: str) -> str:
     for line in md.splitlines():
         if re.match("^#[^#]", line):  # starts with exactly one '#'
             return line.lstrip("#").strip()
-    raise ValueError(
-        "Cannot find any lines that look like markdown h1 headings to use as the title"
-    )
+    raise ValueError("Cannot find any lines that look like markdown h1 headings to use as the title")
 
 
 def make_html(md: str, prefix: str = "resume") -> str:
@@ -104,7 +101,7 @@ def make_html(md: str, prefix: str = "resume") -> str:
     Insert <prefix>.css if it exists.
     """
     try:
-        with open(prefix + ".css") as cssfp:
+        with open("basic_style.css", "r") as cssfp:
             css = cssfp.read()
     except FileNotFoundError:
         print(prefix + ".css not found. Output will by unstyled.")
@@ -160,8 +157,7 @@ def write_pdf(html: str, prefix: str = "resume", chrome: str = "") -> None:
     except subprocess.CalledProcessError as exc:
         if exc.returncode == -6:
             logging.warning(
-                "Chrome died with <Signals.SIGABRT: 6> "
-                f"but you may find {prefix}.pdf was created successfully."
+                "Chrome died with <Signals.SIGABRT: 6> " f"but you may find {prefix}.pdf was created successfully."
             )
         else:
             raise exc
