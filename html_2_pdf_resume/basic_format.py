@@ -26,7 +26,7 @@ def build_resume(resume_data):
             li(resume_data["website"]),
             li(resume_data["address"]),
         )
-        p(resume_data["biography"])
+        p(resume_data["biography"], id="biography")
 
         if len(resume_data["experiences"]) > 0:
             h2("Experience")
@@ -40,15 +40,23 @@ def build_resume(resume_data):
         if len(resume_data["projects"]) > 0:
             h2("Projects")
             for project in resume_data["projects"]:
-                ...
+                h3(
+                    span(project["name"] + ",   " + project["position"]),
+                    span(project["period"]),
+                )
+                ul(
+                    li(project["description"]),
+                    li(project["technology"]),
+                )
 
         if len(resume_data["educations"]) > 0:
             h2("Education")
             for education in resume_data["educations"]:
                 h3(
-                    span(education["university"] + ",   " + education["degree"]),
+                    span(education["university"]),
                     span(education["period"]),
                 )
+                p(education["degree"])
 
         if len(resume_data["skills"]) > 0:
             h2("Skills")

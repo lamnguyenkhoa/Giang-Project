@@ -1,0 +1,70 @@
+{
+  "name": "Gia Phu Tran",
+  "title": "Developer",
+  "biography": "I am a university student who has a passion for Security Information and Data Science.",
+  "birthday": "28/07/2000",
+  "email": "trangiaphu2807@gmail.com",
+  "website": "linkedin.com/in/phu-tran-a7a865209/",
+  "mobilePhone": "0450109319",
+  "address": "236 Princess Str, Kew, VIC, Australia",
+  "skills": [
+   "Web Security",
+   "Web Development",
+   "Capture The Flag",
+   "Electron App",
+   "Linux and Cloud"
+  ],
+  "awards": [
+    "Country place 7 on CTF Time (2020) https://ctftime.org/team/105082"
+  ],
+  "experiences": [
+    {
+      "company": "Kantar Media Vietnam",
+      "position":"Volunteer",
+      "period": "2020",
+      "description": [
+        "Setting up racking server",
+        "Configuring VMWare Horizon, modify old NAS"
+      ]
+    }
+  ],
+  "educations": [
+    {
+      "degree": "Bachelor in Computer Science",
+      "university": "Deakin University",
+      "period": "2021-2022",
+      "wam": "80"
+    }
+  ],
+  "projects": [
+    {
+      "name":"SoulTools",
+      "position":"Developer",
+      "period": "2022",
+      "description":"Solana's toolkit. Bot to automate buying and minting for solana marketplace like MagicEden",
+      "technology":"Electron, NodeJS and Golang"
+    },
+    {
+      "name":"Bug Bounty",
+      "position":"Pentester",
+      "period": "2020-2021",
+      "description":"Doing Bug Bounty as a side hobies",
+      "technology":"BurpSuite, nuclei"
+    },
+    {
+      "name":"AI Heart Disease Predictor",
+      "position":"Developer",
+      "period": "",
+      "description":"Created a data pipeline to process data and built models of logistic regression, random forest, decision tree, kNN, SVM, XGBoost, and Naïve Bayes.",
+      "technology":"Python, Seaborn, Numpy, Pandas, SciKit-Learn, Matplotlib"
+    }
+  ],
+  "activities": [
+    {
+      "name":"Deakin Information Security Club",
+      "position":"President",
+      "period":"2022",
+      "description":"President of Deakin Information Security Club"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 body {
   color: #000000;
-  background: #EEEEEE;
+  background: #eeeeee;
   font: 1.1em "Times New Roman";
   line-height: 1.2;
   margin: 40px 0;
@@ -9,10 +9,14 @@ body {
   margin: 0 auto;
   max-width: 800px;
   padding: 40px 60px;
-  background: #FFFFFF;
-  border: 1px solid #CCCCCC;
-  box-shadow: 2px 2px 4px #AAAAAA;
-  -webkit-box-shadow: 2px 2px 4px #AAAAAA;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  box-shadow: 2px 2px 4px #aaaaaa;
+  -webkit-box-shadow: 2px 2px 4px #aaaaaa;
+}
+#biography {
+  text-align: center;
+  margin-bottom: 2em;
 }
 h1 {
   text-transform: uppercase;
@@ -38,17 +42,17 @@ h3 {
 p {
   margin: 0 0 0.5em 0;
   padding: 0;
-  }
+}
 ul {
   padding: 0;
   margin: 0 1.5em;
-  }
+}
 /* ul immediately after h1 = contact list */
 h1 + ul {
   text-align: center;
   margin: 0;
   padding: 0;
-  }
+}
 h1 + ul > li {
   display: inline;
   white-space: pre;
@@ -66,29 +70,32 @@ h1 + ul + p {
 }
 @media print {
   body {
-      font-size: 10pt;
-      margin: 0;
-      padding: 0;
-      background: none;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+    background: none;
   }
   #resume {
-      margin: 0;
-      padding: 0;
-      border: 0px;
-      background: none;
-      box-shadow: none;
-      -webkit-box-shadow: none;
+    margin: 0;
+    padding: 0;
+    border: 0px;
+    background: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
   }
   /* Do not underline abbr tags in PDF */
   abbr {
-      text-decoration: none;
-      font-variant: none;
+    text-decoration: none;
+    font-variant: none;
   }
   /* Make links black in PDF */
   /* Move this outside the print block to apply this in HTML too */
-  a, a:link, a:visited, a:hover {
-      color: #000000;
-      text-decoration: underline;
+  a,
+  a:link,
+  a:visited,
+  a:hover {
+    color: #000000;
+    text-decoration: underline;
   }
 }
 @page {
@@ -99,17 +106,17 @@ h1 + ul + p {
 }
 @media screen and (max-width: 800px) {
   body {
-      font-size: 16pt;
-      margin: 0;
-      padding: 0;
-      background: #FFFFFF !important;
+    font-size: 16pt;
+    margin: 0;
+    padding: 0;
+    background: #ffffff !important;
   }
   #resume {
-      margin: 0;
-      padding: 1em;
-      border: 0px;
-      background: none;
-      box-shadow: none;
-      -webkit-box-shadow: none;
+    margin: 0;
+    padding: 1em;
+    border: 0px;
+    background: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
   }
 }

@@ -7,7 +7,6 @@ dependencies:
   - matplotlib
   - pip:
       - black
-      - PyPDF2
       - reportlab
       - fpdf
       - markdown
