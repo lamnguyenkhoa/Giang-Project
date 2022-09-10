@@ -7,7 +7,8 @@ import shutil
 import subprocess
 import tempfile
 from get_chrome import guess_chrome_path
-from basic_format import build_resume
+from basic_format import build_resume as build_resume_basic
+from two_column_format import build_resume as build_resume_two_column
 
 
 def parse_arguments():
@@ -16,7 +17,7 @@ def parse_arguments():
     parser.add_argument("-o", "--output", help="Ouptut file name")
     parser.add_argument("-q", "--quiet", action="store_true")
     parser.add_argument("-d", "--debug", action="store_true")
-    parser.add_argument("--write-html",help="Create html output",action="store_true")
+    parser.add_argument("--write-html", help="Create html output", action="store_true")
     args = parser.parse_args()
     if args.quiet:
         logging.basicConfig(level=logging.WARN, format="%(message)s")
@@ -74,7 +75,8 @@ def main():
     print(prefix)
     with open(args.file) as file:
         resume_json = json.load(file)
-    html = build_resume(resume_json).render()
+    # html = build_resume_basic(resume_json).render()
+    html = build_resume_two_column(resume_json).render()
 
     # Output
     write_pdf(html, prefix=prefix)
