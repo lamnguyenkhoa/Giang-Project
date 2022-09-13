@@ -1,8 +1,9 @@
 import json
+import os
 import dominate
 from dominate.tags import *
 
-CSS_FILE = "basic_style.css"
+CSS_FILE = "two_column_style.css"
 
 
 def build_resume(resume_data):
@@ -17,15 +18,29 @@ def build_resume(resume_data):
         style(dominate.util.raw(css))
         script(type="text/javascript", src="script.js")
 
-    with doc.add(div(id="resume")):
-        h1(resume_data["name"])
+    with doc.add(div(id="resume-left")):
+        p(resume_data["biography"], id="biography")
+
         ul(
             li(resume_data["email"]),
             li(resume_data["mobilePhone"]),
             li(resume_data["website"]),
             li(resume_data["address"]),
         )
-        p(resume_data["biography"], id="biography")
+
+        if len(resume_data["skills"]) > 0:
+            h2("Skills")
+            ul([li(skill) for skill in resume_data["skills"]])
+
+        if len(resume_data["awards"]) > 0:
+            h2("Awards")
+            for award in resume_data["awards"]:
+                tmp = "{name} ({period})".format(name=award["name"], period=award["period"])
+                p(tmp)
+
+    with doc.add(div(id="resume-right")):
+        h1(resume_data["name"])
+        h2(resume_data["title"])
 
         if len(resume_data["experiences"]) > 0:
             h2("Experience")
@@ -51,16 +66,10 @@ def build_resume(resume_data):
         if len(resume_data["educations"]) > 0:
             h2("Education")
             for education in resume_data["educations"]:
-                h3(
-                    span(education["university"]),
-                    span(education["period"]),
-                )
                 p(education["degree"])
-
-        if len(resume_data["skills"]) > 0:
-            h2("Skills")
-            ul([li(skill) for skill in resume_data["skills"]])
-
+                ul(
+                    li(education["university"] + " | " + education["period"]),
+                )
     return doc
 
 
