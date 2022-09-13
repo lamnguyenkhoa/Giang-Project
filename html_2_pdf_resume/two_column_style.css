@@ -5,7 +5,18 @@ body {
   line-height: 1.2;
   margin: 40px 0;
   display: flex;
+  gap: 2vw
 }
+#resume-left {
+  max-width: 30vw;
+  padding: 50px;
+  background-color: lightblue;
+}
+
+#resume-right {
+  flex-grow: 1;
+}
+
 #resume {
   margin: 0 auto;
   max-width: 800px;
@@ -33,6 +44,12 @@ h2 {
   margin: 1em 0 0 0;
   padding: 0;
 }
+#job-title {
+  border-bottom: 0 solid #ffffff;
+  text-align: center;
+  font-size: 100%;
+}
+
 h3 {
   font-size: 100%;
   margin: 0.8em 0 0.3em 0;

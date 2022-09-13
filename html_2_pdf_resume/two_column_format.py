@@ -40,10 +40,10 @@ def build_resume(resume_data):
 
     with doc.add(div(id="resume-right")):
         h1(resume_data["name"])
-        h2(resume_data["title"])
+        h2(resume_data["title"], id="job-title")
 
         if len(resume_data["experiences"]) > 0:
-            h2("Experience")
+            h2("Experiences")
             for experience in resume_data["experiences"]:
                 h3(
                     span(experience["position"] + ",   " + experience["company"]),
