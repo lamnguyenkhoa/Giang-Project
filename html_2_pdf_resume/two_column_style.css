@@ -1,31 +1,32 @@
+html {
+  min-height: 100%;
+}
+
 body {
-  color: #000000;
+  color: black;
   background: #eeeeee;
   font: 1.1em "Times New Roman";
   line-height: 1.2;
-  margin: 40px 0;
-  display: flex;
-  gap: 2vw
 }
+#resume {
+  display: flex;
+  gap: 2vw;
+  min-height: 100vh;
+}
+
 #resume-left {
   max-width: 30vw;
-  padding: 50px;
-  background-color: lightblue;
+  padding: 80px 20px;
+  background-color: darkslategray;
+  color: white;
 }
 
 #resume-right {
   flex-grow: 1;
+  padding: 40px 20px;
+  height: 100%;
 }
 
-#resume {
-  margin: 0 auto;
-  max-width: 800px;
-  padding: 40px 60px;
-  background: #ffffff;
-  border: 1px solid #cccccc;
-  box-shadow: 2px 2px 4px #aaaaaa;
-  -webkit-box-shadow: 2px 2px 4px #aaaaaa;
-}
 #biography {
   text-align: center;
   margin-bottom: 2em;
@@ -38,11 +39,15 @@ h1 {
   padding: 0;
 }
 h2 {
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid black;
   text-transform: uppercase;
   font-size: 130%;
-  margin: 1em 0 0 0;
+  margin: 1em 0 0.5em 0;
   padding: 0;
+}
+
+#resume-left h2 {
+  border-bottom: 1px solid white;
 }
 #job-title {
   border-bottom: 0 solid #ffffff;
@@ -120,7 +125,8 @@ h1 + ul + p {
   /* Change margins and paper size of PDF */
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/@page */
   size: letter;
-  margin: 0.5in 0.8in;
+  /* margin: 0.5in 0.8in; */
+  margin: 0;
 }
 @media screen and (max-width: 800px) {
   body {

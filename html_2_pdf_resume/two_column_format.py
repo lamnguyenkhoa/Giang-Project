@@ -17,8 +17,9 @@ def build_resume(resume_data):
     with doc.head:
         style(dominate.util.raw(css))
         script(type="text/javascript", src="script.js")
+    main_div = doc.add(div(id="resume"))
 
-    with doc.add(div(id="resume-left")):
+    with main_div.add(div(id="resume-left")):
         p(resume_data["biography"], id="biography")
 
         ul(
@@ -38,7 +39,7 @@ def build_resume(resume_data):
                 tmp = "{name} ({period})".format(name=award["name"], period=award["period"])
                 p(tmp)
 
-    with doc.add(div(id="resume-right")):
+    with main_div.add(div(id="resume-right")):
         h1(resume_data["name"])
         h2(resume_data["title"], id="job-title")
 
@@ -66,10 +67,11 @@ def build_resume(resume_data):
         if len(resume_data["educations"]) > 0:
             h2("Education")
             for education in resume_data["educations"]:
-                p(education["degree"])
-                ul(
-                    li(education["university"] + " | " + education["period"]),
+                h3(
+                    span(education["university"]),
+                    span(education["period"]),
                 )
+                p(education["degree"])
     return doc
 
 
