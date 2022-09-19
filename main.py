@@ -1,100 +1,89 @@
-import matplotlib.pyplot as plt
+import argparse
+import base64
 import json
+import logging
+import os
+import shutil
+import subprocess
+import tempfile
+from get_chrome import guess_chrome_path
+from basic_format import build_resume as build_resume_basic
+from two_column_format import build_resume as build_resume_two_column
 
 
-def load_user_data(filename):
-    file = open(filename)
-    data = json.load(file)
-    file.close()
-    return data
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", required=True, help="JSON file contain resume data [resume.json]")
+    parser.add_argument("-o", "--output", help="Ouptut file name")
+    parser.add_argument("-q", "--quiet", action="store_true")
+    parser.add_argument("-d", "--debug", action="store_true")
+    parser.add_argument("--write-html", help="Create html output", action="store_true")
+    args = parser.parse_args()
+    if args.quiet:
+        logging.basicConfig(level=logging.WARN, format="%(message)s")
+    elif args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="%(message)s")
+    else:
+        logging.basicConfig(level=logging.INFO, format="%(message)s")
+    return args
+
+
+def write_pdf(html, prefix):
+    chrome = guess_chrome_path()
+    html64 = base64.b64encode(html.encode("utf-8"))
+    options = [
+        "--no-sandbox",
+        "--headless",
+        "--print-to-pdf-no-header",
+        "--enable-logging=stderr",
+        "--log-level=2",
+        "--in-process-gpu",
+        "--disable-gpu",
+    ]
+
+    tmpdir = tempfile.mkdtemp(prefix="resume.md_")
+    options.append(f"--crash-dumps-dir={tmpdir}")
+    options.append(f"--user-data-dir={tmpdir}")
+
+    try:
+        subprocess.run(
+            [
+                chrome,
+                *options,
+                f"--print-to-pdf={prefix}.pdf",
+                "data:text/html;base64," + html64.decode("utf-8"),
+            ],
+            check=True,
+        )
+        logging.info(f"Wrote {prefix}.pdf")
+    except subprocess.CalledProcessError as exc:
+        if exc.returncode == -6:
+            logging.warning(
+                "Chrome died with <Signals.SIGABRT: 6> " f"but you may find {prefix}.pdf was created successfully."
+            )
+        else:
+            raise exc
+    finally:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+        if os.path.isdir(tmpdir):
+            logging.debug(f"Could not delete {tmpdir}")
 
 
 def main():
-    # Set attributes
-    data = load_user_data("personA.json")
-    Header = ">>>This resume was generated entirely in Python."
-    Name = data["name"]
-    Title = data["title"]
-    Contact = data["address"] + "\n" + data["mobilePhone"] + "\n" + data["email"] + "\n" + data["website"]
-    ProjectsHeader = "PROJECTS"
-    ProjectOneTitle = "Project One Name"
-    ProjectOneDesc = "- Description 1\n- Another description 2\n- Yeah I carried my team of 5 to success"
-    ProjectTwoTitle = "Project Two name"
-    ProjectTwoDesc = (
-        "- Description 1 with some example\n- Able to push the team to finish it 5 days earlier than deadline"
-    )
-    WorkHeader = "EXPERIENCE"
-    WorkOneTitle = data["experiences"][0]["company"] + " / " + data["experiences"][0]["position"]
-    WorkOneTime = data["experiences"][0]["period"]
-    WorkOneDesc = "- " + data["experiences"][0]["description"][0] + "\n- " + data["experiences"][0]["description"][1]
-    WorkTwoTitle = data["experiences"][1]["company"] + " / " + data["experiences"][1]["position"]
-    WorkTwoTime = data["experiences"][1]["period"]
-    WorkTwoDesc = (
-        "- "
-        + data["experiences"][1]["description"][0]
-        + "\n- "
-        + data["experiences"][1]["description"][1]
-        + "\n- "
-        + data["experiences"][1]["description"][2]
-    )
-    EduHeader = "EDUCATION"
-    EduOneTitle = "Example University, Bachelor of Business Administration"
-    EduOneTitle = data["educations"][0]["university"] + ", " + data["educations"][0]["degree"]
-    EduOneTime = data["educations"][0]["period"]
-    EduTwoTitle = data["educations"][1]["university"] + ", " + data["educations"][1]["degree"]
-    EduTwoTime = data["educations"][1]["period"]
-    SkillsHeader = "Skills"
-    SkillsDesc = "- Python\n- Panas\n- NumPy\n- Data Visualization\n- Data Cleaning\n- Command Line\n- Git and Version Control\n- SQL\n- APIs\n- Probability/Statistics\n- Data Manipulation\n- Excel"
-    ExtrasDesc = "Learned popular data science\nlanguages, data cleaning and\nmanipulation, machine learning \nand statistical analysis"
+    args = parse_arguments()
+    prefix, _ = os.path.splitext(os.path.abspath(args.file))
+    print(prefix)
+    with open(args.file) as file:
+        resume_json = json.load(file)
+    # html = build_resume_basic(resume_json).render()
+    html = build_resume_two_column(resume_json).render()
 
-    # set font
-    plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = "STIXGeneral"
-
-    fig, ax = plt.subplots(figsize=(8.5, 11))
-
-    # Decorative Lines
-    ax.axvline(x=0.5, ymin=0, ymax=1, color="#007ACC", alpha=0.0, linewidth=50)
-    plt.axvline(x=0.99, color="#000000", alpha=0.5, linewidth=300)
-    plt.axhline(y=0.88, xmin=0, xmax=1, color="#ffffff", linewidth=3)
-
-    # set background color
-    ax.set_facecolor("white")
-
-    # remove axes
-    plt.axis("off")
-
-    # add text
-    plt.annotate(Header, (0.02, 0.98), weight="regular", fontsize=8, alpha=0.6)
-    plt.annotate(Name, (0.02, 0.94), weight="bold", fontsize=20)
-    plt.annotate(Title, (0.02, 0.91), weight="regular", fontsize=14)
-    plt.annotate(Contact, (0.7, 0.906), weight="regular", fontsize=8, color="#ffffff")
-
-    plt.annotate(ProjectsHeader, (0.02, 0.86), weight="bold", fontsize=10, color="#58C1B2")
-    plt.annotate(ProjectOneTitle, (0.02, 0.832), weight="bold", fontsize=10)
-    plt.annotate(ProjectOneDesc, (0.04, 0.78), weight="regular", fontsize=9)
-    plt.annotate(ProjectTwoTitle, (0.02, 0.745), weight="bold", fontsize=10)
-    plt.annotate(ProjectTwoDesc, (0.04, 0.71), weight="regular", fontsize=9)
-
-    plt.annotate(WorkHeader, (0.02, 0.54), weight="bold", fontsize=10, color="#58C1B2")
-    plt.annotate(WorkOneTitle, (0.02, 0.508), weight="bold", fontsize=10)
-    plt.annotate(WorkOneTime, (0.02, 0.493), weight="regular", fontsize=9, alpha=0.6)
-    plt.annotate(WorkOneDesc, (0.04, 0.445), weight="regular", fontsize=9)
-    plt.annotate(WorkTwoTitle, (0.02, 0.4), weight="bold", fontsize=10)
-    plt.annotate(WorkTwoTime, (0.02, 0.385), weight="regular", fontsize=9, alpha=0.6)
-    plt.annotate(WorkTwoDesc, (0.04, 0.337), weight="regular", fontsize=9)
-
-    plt.annotate(EduHeader, (0.02, 0.185), weight="bold", fontsize=10, color="#58C1B2")
-    plt.annotate(EduOneTitle, (0.02, 0.155), weight="bold", fontsize=10)
-    plt.annotate(EduOneTime, (0.02, 0.14), weight="regular", fontsize=9, alpha=0.6)
-    plt.annotate(EduTwoTitle, (0.02, 0.08), weight="bold", fontsize=10)
-    plt.annotate(EduTwoTime, (0.02, 0.065), weight="regular", fontsize=9, alpha=0.6)
-    
-    plt.annotate(SkillsHeader, (0.7, 0.8), weight="bold", fontsize=10, color="#ffffff")
-    plt.annotate(SkillsDesc, (0.7, 0.56), weight="regular", fontsize=10, color="#ffffff")
-    plt.annotate(ExtrasDesc, (0.7, 0.345), weight="regular", fontsize=10, color="#ffffff")
-
-    plt.savefig("resumeexample.pdf", dpi=300, bbox_inches="tight")
+    # Output
+    write_pdf(html, prefix=prefix)
+    if args.write_html:
+        with open(prefix + ".html", "w", encoding="utf-8") as htmlfp:
+            htmlfp.write(html)
+            logging.info(f"Wrote {htmlfp.name}")
 
 
 if __name__ == "__main__":
