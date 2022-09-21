@@ -1,15 +1,16 @@
-import time 
+import time
 import re
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from html.parser import HTMLParser
 
+USERNAME = "anh-giang"
 
 driver = webdriver.Chrome("./chromedriver")
-driver.get("https://console.mail7.io/admin/inbox/inbox?username=anh-giang")
+driver.get("https://console.mail7.io/admin/inbox/inbox?username={username}".format(username=USERNAME))
+link = ""
 
 # Wait until email loaded
 WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#depublicemailinbox > li")))
@@ -28,12 +29,20 @@ for email in email_list:
     print(content.text)
     print()
 
-    if ("airtable" in title.text.lower() and "Please confirm your email" in content.text):
+    if "airtable" in title.text.lower() and "Please confirm your email" in content.text:
         print("I fucking found it")
         print("Here is the link")
-        print(re.search("(?P<url>https?://[^\s]+)", content.text).group("url"))
+        link = re.search("(?P<url>https?://[^\s]+)", content.text).group("url")
+        print(link)
         # Note to self: for some reason, the verification email content has hyperlink display as plain text inside it. Other email
-        # don't, instead just appear as the hyperlink name ("Click here" or "Check this guideb  ")
+        # don't, instead just appear as the hyperlink name ("Click here" or "Check this guideb ")
         break
 
-driver.close()
+if link != "":
+    print("Go to link...")
+    time.sleep(2)
+    driver.get(link)
+    # Wait until page loaded
+    WebDriverWait(driver, 20)
+    # Wait a bit more to make sure
+    time.sleep(2)
